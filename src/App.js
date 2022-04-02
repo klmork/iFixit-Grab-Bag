@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import Devices from './components/devices';
+import NavBar from './components/navbar';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -62,18 +64,13 @@ class App extends React.Component {
 
     //TODO: make grid and other components... testing as list for now
     return (
-      <div className = "App">
-        <h1>Device Grab Bag</h1>
-        <div>
-          {
-            devices.map(device => (
-              <ol key={ device.wikiid }>
-                <span>Device { device.display_title } </span><br></br>
-                <img src={device.image.thumbnail} alt="device"/>
-              </ol>
-            ))
-          }
-        </div>
+      <React.Fragment>
+        <NavBar/>
+        <main className="container">
+          <Devices
+            devices={this.state.devices}
+          />
+        </main>
         <p>page {this.state.page}</p>
         <button 
           className={this.getBackBtnClasses()} 
@@ -87,7 +84,7 @@ class App extends React.Component {
         >
           Next
         </button>
-      </div>
+      </React.Fragment>
       
     );
   }
