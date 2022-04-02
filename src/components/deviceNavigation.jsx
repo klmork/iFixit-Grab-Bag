@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import '../App.css'
 
-class PageNavigation extends React.Component {
+class DeviceNavigation extends React.Component {
     render() { 
         const { pageNum, onIncrement, onDecrement } = this.props;
-        return (<div className="center col-9">
+        return (<div className="center">
                     <p>page {pageNum}</p><br></br>
                     <button 
                         className={this.getBackBtnClasses(pageNum)} 
@@ -32,4 +32,4 @@ class PageNavigation extends React.Component {
   }
 }
  
-export default PageNavigation;
+export default DeviceNavigation;

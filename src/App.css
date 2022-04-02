@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100; /*TODO: change based on size*/
   border: 3px solid green;
 }
 

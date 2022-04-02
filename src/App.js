@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
-import PageNavigation from './components/pageNavigation'
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -64,16 +63,19 @@ class App extends React.Component {
             <div className="col-3"><span>hi</span></div>
             <Devices
               devices={this.state.devices}
+              pageNum={this.state.page}
+              onIncrement={this.handleIncrement}
+              onDecrement={this.handleDecrement}
             />
           </main>
-          <div className="row">
+          {/* <div className="row">
           <div className="col-3"></div>
           <PageNavigation
             pageNum={this.state.page}
             onIncrement={this.handleIncrement}
             onDecrement={this.handleDecrement}
           />
-          </div>
+          </div> */}
         </div>
       </React.Fragment>
     );

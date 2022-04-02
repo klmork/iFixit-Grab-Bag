@@ -13,8 +13,9 @@ class Device extends React.Component {
                 
                 {/* Pick smaller image when screen size is smaller 
                 ... 780 fits thumbnail nicely*/}
+                {/*TODO: maybe organize css and resizing better*/}
                 <img
-                    srcset= {srcImage}
+                    srcSet= {srcImage}
                     sizes = "(max-width: 780px) 96px, 300px"
                     src = {device.image.standard} 
                     alt="device"
