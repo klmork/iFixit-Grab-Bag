@@ -7,6 +7,7 @@
 
 .device-text {
   height: 50px;
+  background-color: #d3d3d3;
 }
 
 .device-container {
@@ -19,19 +20,27 @@
   padding: 15px;
   border: 1px solid rgb(73, 71, 71);
 }
-.GrabBag_Title {
+
+/* Title disappears if screen small */
+@media only screen and (max-width: 680px) {
+  .Owned_Device {
+    padding: 0;
+  }
+}
+
+/* ------------ Title for Containers ----- */
+.title {
   font-size: x-large;
   font-weight: bold;
+  background-color: #d3d3d3;
+  height: 80px;
 }
-/* Title disappears if screen small */
+
 @media only screen and (max-width: 680px) {
   .Device_Title {
     display: none;
   }
-  .GrabBag_Title {
+  .grab-bag-title {
     font-size: x-small;
-  }
-  .Owned_Device {
-    padding: 0;
   }
 }

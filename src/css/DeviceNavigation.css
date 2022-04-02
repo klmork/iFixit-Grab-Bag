@@ -4,10 +4,10 @@
 }
 
 /* used for buttons and page navigation */
+/* TODO: now also used for containers...maybe move into new css file */
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px; /*TODO: change based on size*/
-  border: 3px solid green;
 }

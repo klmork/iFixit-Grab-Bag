@@ -9,6 +9,7 @@ class Devices extends React.Component {
         const { devices, pageNum, onIncrement, onDecrement, onDrag } = this.props;
         return (
             <div className="col-9">
+                <p className="title text-center center">iFixit Devices</p>
                 <div className="Devices">
                     {
                     devices.map(device => (

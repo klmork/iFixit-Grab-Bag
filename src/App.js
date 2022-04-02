@@ -73,6 +73,7 @@ class App extends React.Component {
 
   
   // -------------------- Render ----------------------------
+  //TODO: make class for containers with columns and title
   render() { 
     const { page, devices } = this.state;
 
@@ -85,7 +86,8 @@ class App extends React.Component {
                  onDragOver={this.allowDrop}
                  onDrop={this.handleDrop}
             >
-              <p className="GrabBag_Title">My Owned Devices</p>
+          
+              <p className="title grab-bag-title text-center center">My Owned Devices</p>
             {
               //TODO: handle duplicates (add key and make sure unique)
               this.state.grabBag.map(device => (
