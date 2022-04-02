@@ -88,6 +88,7 @@ class App extends React.Component {
             >
           
               <p className="title grab-bag-title text-center center">My Owned Devices</p>
+              <div className="grab-bag-drop-box">
             {
               //TODO: handle duplicates (add key and make sure unique)
               this.state.grabBag.map(device => (
@@ -97,6 +98,7 @@ class App extends React.Component {
                 />
                     ))
                 }
+                </div>
             </div>
             <div className="col-9">
               <Devices

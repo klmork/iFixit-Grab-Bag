@@ -22,7 +22,7 @@ img {
 [class*="col-"] {
   float: left;
   box-sizing: border-box;
-  border: 1px solid rgb(247, 0, 255);
+  /* border: 1px solid rgb(247, 0, 255); */
 }
 
 .row::after {
@@ -71,4 +71,8 @@ img {
 /* ------------ Grab Bag --------------- */
 .grab-bag {
   height: 1660px;
+}
+.grab-bag-drop-box {
+  background-color: cornflowerblue;
+  height: 1353px;
 }
