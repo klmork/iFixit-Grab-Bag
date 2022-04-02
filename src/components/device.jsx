@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../css/Device.css'
 import '../App.css'
 
 class Device extends React.Component {
    
     render() { 
-        const { device } = this.props;
+        const { device, onDrag} = this.props;
         const srcImage = device.image.thumbnail  + " 96w, " + device.image.standard +" 300w";
         return (
-            <div className="Device">
+            <div className="Device" 
+                draggable="true"
+                onDragStart={(e)=> onDrag(e, device.display_title)}>
                 {/*<span>Device { device.display_title } </span><br></br>*/}
                 
                 {/* Pick smaller image when screen size is smaller:

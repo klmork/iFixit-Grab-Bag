@@ -10,7 +10,8 @@ class App extends React.Component {
   state = {
     devices: [],
     page: 0,
-    numDevicesDisplayed: 12
+    numDevicesDisplayed: 12,
+    grabBag: []
   };
 
   componentDidMount() {
@@ -49,33 +50,51 @@ class App extends React.Component {
 
   };
 
+  handleDragStart = (e, v) => {
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.setData("text/plain", v)
+  };
 
+  handleDrop = e => {
+    const data = e.dataTransfer.getData("text/plain");
+    let { grabBag } = this.state;
+    grabBag.push(data);
+    this.setState({ grabBag });
+  };
+
+  // -------------------- Helper Functions ---------------------
+  allowDrop = ev => {
+    ev.preventDefault();
+  };
+
+  
   // -------------------- Render ----------------------------
   render() { 
-    const { devices } = this.state;
+    const { page, devices } = this.state;
 
-    //TODO: make grid and other components... testing as list for now
     return (
       <React.Fragment>
         <NavBar/>
         <div className="Container">
           <main className="row">
-            <div className="col-3"><span>hi</span></div>
+            <div className="col-3" 
+                 onDragOver={this.allowDrop}
+                 onDrop={this.handleDrop}
+            >
+            {
+              this.state.grabBag.map(deviceName => (
+                        <ol>{deviceName}</ol>
+                    ))
+                }
+            </div>
             <Devices
-              devices={this.state.devices}
-              pageNum={this.state.page}
+              devices={devices}
+              pageNum={page}
               onIncrement={this.handleIncrement}
               onDecrement={this.handleDecrement}
+              onDrag={this.handleDragStart}
             />
           </main>
-          {/* <div className="row">
-          <div className="col-3"></div>
-          <PageNavigation
-            pageNum={this.state.page}
-            onIncrement={this.handleIncrement}
-            onDecrement={this.handleDecrement}
-          />
-          </div> */}
         </div>
       </React.Fragment>
     );
