@@ -1,4 +1,4 @@
-/* Centering */
+/* Centering and Scaling*/
 .center-text {
   text-align: center;
 }
@@ -9,6 +9,10 @@
   align-items: center;
   height: 200px;
   border: 3px solid green;
+}
+
+img {
+  max-width: 100%;
 }
 
 /* Grid and Page Layout */

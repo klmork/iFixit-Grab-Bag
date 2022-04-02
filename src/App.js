@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
+import PageNavigation from './components/pageNavigation'
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -10,7 +11,7 @@ class App extends React.Component {
   state = {
     devices: [],
     page: 0,
-    numDevicesDisplayed: 10
+    numDevicesDisplayed: 12
   };
 
   componentDidMount() {
@@ -48,14 +49,6 @@ class App extends React.Component {
     this.setState({ page }, this.handleFetch);
 
   };
-    
-  // ------------------------ Helper Methods -------------------
-
-  getBackBtnClasses() {
-    let classes = "btn m-2 b-4 btn-";
-    classes += this.state.page === 0 ? "basic" : "primary";
-    return classes;
-  }
 
 
   // -------------------- Render ----------------------------
@@ -66,26 +59,23 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <NavBar/>
-        <main className="container">
-          <Devices
-            devices={this.state.devices}
+        <div className="Container">
+          <main className="row">
+            <div className="col-3"><span>hi</span></div>
+            <Devices
+              devices={this.state.devices}
+            />
+          </main>
+          <div className="row">
+          <div className="col-3"></div>
+          <PageNavigation
+            pageNum={this.state.page}
+            onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
           />
-        </main>
-        <p>page {this.state.page}</p>
-        <button 
-          className={this.getBackBtnClasses()} 
-          onClick={this.handleDecrement}
-        >
-          Back
-        </button>
-        <button 
-          className="btn btn-primary m-2 b-4" 
-          onClick={this.handleIncrement}
-        >
-          Next
-        </button>
+          </div>
+        </div>
       </React.Fragment>
-      
     );
   }
 
