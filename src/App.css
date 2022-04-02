@@ -1,26 +1,24 @@
-/* Centering and Scaling*/
-.center-text {
-  text-align: center;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100; /*TODO: change based on size*/
-  border: 3px solid green;
+/* Small screen - stack page num on top of buttons */
+@media only screen and (max-width: 320px) {
 }
 
 img {
   max-width: 100%;
 }
 
-/* Grid and Page Layout */
+/* --------- Grid and Page Layout ---------- */
 
 .Container {
   padding: 70px;
 }
+/* Small screen - reduce padding */
+@media only screen and (max-width: 320px) {
+  .Container {
+    padding: 10px;
+  }
+}
 
+/* --------- Grid --------------- */
 [class*="col-"] {
   float: left;
   padding: 15px;

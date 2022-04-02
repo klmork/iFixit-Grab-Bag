@@ -1,0 +1,13 @@
+/* Centering and Scaling*/
+.center-text {
+  text-align: center;
+}
+
+/* used for buttons and page navigation */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /*TODO: change based on size*/
+  border: 3px solid green;
+}
