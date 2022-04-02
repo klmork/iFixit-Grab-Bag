@@ -1,11 +1,37 @@
 .Device {
-  padding: 15px;
-  border: 1px solid rgb(73, 71, 71);
+  /* border: 1px solid rgb(73, 71, 71); */
   /*position: absolute; /*for dragging*/
   cursor: move;
+  box-shadow: 2px 2px 10px;
 }
 
+.device-text {
+  height: 50px;
+}
+
+.device-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* --------- Owned Devices ------------*/
 .Owned_Device {
   padding: 15px;
   border: 1px solid rgb(73, 71, 71);
+}
+.GrabBag_Title {
+  font-size: x-large;
+  font-weight: bold;
+}
+/* Title disappears if screen small */
+@media only screen and (max-width: 680px) {
+  .Device_Title {
+    display: none;
+  }
+  .GrabBag_Title {
+    font-size: x-small;
+  }
+  .Owned_Device {
+    padding: 0;
+  }
 }

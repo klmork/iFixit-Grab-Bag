@@ -7,7 +7,7 @@ class OwnedDevice extends React.Component {
 
         return (
             <div className="Owned_Device">
-                {device.display_title}<br></br>
+                <p className="Device_Title">{device.display_title}</p>
                 <img src={device.image.mini} alt="device"></img>
             </div>
         );

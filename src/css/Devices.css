@@ -1,7 +1,8 @@
 /* Change num of columns based on screen size */
 .Devices {
   column-count: 1;
-  column-gap: 30px;
+  column-gap: 40px;
+  padding: 15px;
 }
 
 @media only screen and (min-width: 680px) {

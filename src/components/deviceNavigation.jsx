@@ -1,11 +1,12 @@
 import React from 'react';
-import '../App.css'
+import '../css/DeviceNavigation.css'
 
 class DeviceNavigation extends React.Component {
     render() { 
         const { pageNum, onIncrement, onDecrement } = this.props;
-        return (<div className="center">
-                    <p>page {pageNum}</p><br></br>
+        return (<div>
+                    <div className="center-text">page {pageNum}</div>
+                    <div className="center">
                     <button 
                         className={this.getBackBtnClasses(pageNum)} 
                         onClick={()=>onDecrement()}
@@ -18,6 +19,7 @@ class DeviceNavigation extends React.Component {
                     >
                     Next
                     </button>
+                    </div>
                 </div>
         );
     }

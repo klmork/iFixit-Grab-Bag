@@ -3,6 +3,7 @@ import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
 import OwnedDevice from './components/ownedDevice';
+import './css/Device.css';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -84,7 +85,7 @@ class App extends React.Component {
                  onDragOver={this.allowDrop}
                  onDrop={this.handleDrop}
             >
-              <h1>My Owned Devices</h1>
+              <p className="GrabBag_Title">My Owned Devices</p>
             {
               //TODO: handle duplicates (add key and make sure unique)
               this.state.grabBag.map(device => (
