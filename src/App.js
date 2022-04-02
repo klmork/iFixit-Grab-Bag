@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
+import OwnedDevice from './components/ownedDevice';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -52,12 +53,14 @@ class App extends React.Component {
 
   handleDragStart = (e, v) => {
     e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("text/plain", v)
+    e.dataTransfer.setData("device", v)
   };
 
   handleDrop = e => {
-    const data = e.dataTransfer.getData("text/plain");
+    const dataString = e.dataTransfer.getData("device");
+    const data = JSON.parse(dataString);
     let { grabBag } = this.state;
+    //TODO: check for duplicates and add counter
     grabBag.push(data);
     this.setState({ grabBag });
   };
@@ -81,9 +84,14 @@ class App extends React.Component {
                  onDragOver={this.allowDrop}
                  onDrop={this.handleDrop}
             >
+              <h1>My Owned Devices</h1>
             {
-              this.state.grabBag.map(deviceName => (
-                        <ol>{deviceName}</ol>
+              //TODO: handle duplicates (add key and make sure unique)
+              this.state.grabBag.map(device => (
+                <OwnedDevice 
+                  key={device.wikiid}
+                  device={device}
+                />
                     ))
                 }
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/Device.css'
 import '../App.css'
 
+//TODO: fix hierarchy (maybe add different children for grab bag vs grid view).
 class Device extends React.Component {
    
     render() { 
@@ -10,7 +11,9 @@ class Device extends React.Component {
         return (
             <div className="Device" 
                 draggable="true"
-                onDragStart={(e)=> onDrag(e, device.display_title)}>
+                onDragStart={(e)=> onDrag(e, JSON.stringify(device))}>
+                   
+                    
                 {/*<span>Device { device.display_title } </span><br></br>*/}
                 
                 {/* Pick smaller image when screen size is smaller:
