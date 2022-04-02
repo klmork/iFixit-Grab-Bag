@@ -1,4 +1,19 @@
+/* Change num of columns based on screen size */
 .Devices {
-  column-count: 3;
-  column-gap: 40px;
+  column-count: 1;
+  column-gap: 30px;
+}
+
+@media only screen and (min-width: 680px) {
+  .Devices {
+    column-count: 2;
+    column-gap: 40px;
+  }
+}
+
+@media only screen and (min-width: 1080px) {
+  .Devices {
+    column-count: 3;
+    column-gap: 40px;
+  }
 }
