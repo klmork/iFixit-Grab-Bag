@@ -1,4 +1,6 @@
 .Device {
   padding: 15px;
   border: 1px solid rgb(73, 71, 71);
+  /*position: absolute; /*for dragging*/
+  cursor: move;
 }
