@@ -5,7 +5,7 @@ class DeviceNavigation extends React.Component {
     render() { 
         const { pageNum, onIncrement, onDecrement } = this.props;
         return (<div>
-                    <div className="center-text">page {pageNum}</div>
+                    <div className="center-text page-num-text">page {pageNum}</div>
                     <div className="center">
                     <button 
                         className={this.getBackBtnClasses(pageNum)} 
@@ -14,10 +14,10 @@ class DeviceNavigation extends React.Component {
                         Back
                     </button>
                     <button 
-                    className="btn btn-primary m-2 b-4" 
+                    className="nav-button button-clickable" 
                     onClick={()=>onIncrement()}
                     >
-                    Next
+                     Next
                     </button>
                     </div>
                 </div>
@@ -28,8 +28,8 @@ class DeviceNavigation extends React.Component {
   // ------------------------ Helper Methods -------------------
 
   getBackBtnClasses(pageNum) {
-    let classes = "btn m-2 b-4 btn-";
-    classes += pageNum === 0 ? "basic" : "primary";
+    let classes = "nav-button button-";
+    classes += pageNum === 0 ? "no-click" : "clickable";
     return classes;
   }
 }

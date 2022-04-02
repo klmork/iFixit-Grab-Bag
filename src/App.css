@@ -21,7 +21,7 @@ img {
 /* --------- Grid --------------- */
 [class*="col-"] {
   float: left;
-  padding: 15px;
+  box-sizing: border-box;
   border: 1px solid rgb(247, 0, 255);
 }
 
@@ -66,4 +66,9 @@ img {
 }
 .col-12 {
   width: 100%;
+}
+
+/* ------------ Grab Bag --------------- */
+.grab-bag {
+  height: 1660px;
 }

@@ -7,7 +7,12 @@
 
 .device-text {
   height: 50px;
-  background-color: #d3d3d3;
+  background-color: #a7a4a4;
+}
+
+.device-text:hover {
+  background-color: rgb(73, 71, 71);
+  color: #fdfdfd;
 }
 
 .device-container {

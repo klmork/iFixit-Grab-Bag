@@ -79,10 +79,10 @@ class App extends React.Component {
 
     return (
       <React.Fragment>
-        <NavBar/>
+        {/* <NavBar/> */}
         <div className="Container">
           <main className="row">
-            <div className="col-3" 
+            <div className="col-3 grab-bag" 
                  onDragOver={this.allowDrop}
                  onDrop={this.handleDrop}
             >
@@ -98,13 +98,15 @@ class App extends React.Component {
                     ))
                 }
             </div>
-            <Devices
-              devices={devices}
-              pageNum={page}
-              onIncrement={this.handleIncrement}
-              onDecrement={this.handleDecrement}
-              onDrag={this.handleDragStart}
-            />
+            <div className="col-9">
+              <Devices
+                devices={devices}
+                pageNum={page}
+                onIncrement={this.handleIncrement}
+                onDecrement={this.handleDecrement}
+                onDrag={this.handleDragStart}
+              />
+            </div>
           </main>
         </div>
       </React.Fragment>

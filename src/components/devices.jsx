@@ -8,7 +8,7 @@ class Devices extends React.Component {
     render() { 
         const { devices, pageNum, onIncrement, onDecrement, onDrag } = this.props;
         return (
-            <div className="col-9">
+            <div>
                 <p className="title text-center center">iFixit Devices</p>
                 <div className="Devices">
                     {
