@@ -82,6 +82,18 @@ class App extends React.Component {
     ev.preventDefault();
   };
 
+  renderDevices = () => {
+    if (this.state.grabBag.length === 0)
+      return <p className="center">Drop Files Here</p>
+
+    return (this.state.grabBag.map(deviceBundle => (
+      <OwnedDevice 
+        key={deviceBundle.device.wikiid}
+        device={deviceBundle.device}
+        count={deviceBundle.count}
+      />
+    )));
+  }
   
   // -------------------- Render ----------------------------
   //TODO: make class for containers with columns and title
@@ -100,16 +112,7 @@ class App extends React.Component {
           
               <p className="title text-center center">My Owned Devices</p>
               <div className="grab-bag-drop-box">
-            {
-              //TODO: handle duplicates (add key and make sure unique)
-              this.state.grabBag.map(deviceBundle => (
-                <OwnedDevice 
-                  key={deviceBundle.device.wikiid}
-                  device={deviceBundle.device}
-                  count={deviceBundle.count}
-                />
-                    ))
-                }
+              { this.renderDevices() }
                 </div>
             </div>
             <div className="col-9">
