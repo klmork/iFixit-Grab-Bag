@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
-import OwnedDevice from './components/ownedDevice';
+import GrabBag from './components/grabBag';
 import './css/Device.css';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
@@ -81,19 +81,6 @@ class App extends React.Component {
   allowDrop = ev => {
     ev.preventDefault();
   };
-
-  renderDevices = () => {
-    if (this.state.grabBag.length === 0)
-      return <p className="center">Drop Files Here</p>
-
-    return (this.state.grabBag.map(deviceBundle => (
-      <OwnedDevice 
-        key={deviceBundle.device.wikiid}
-        device={deviceBundle.device}
-        count={deviceBundle.count}
-      />
-    )));
-  }
   
   // -------------------- Render ----------------------------
   //TODO: make class for containers with columns and title
@@ -105,15 +92,12 @@ class App extends React.Component {
         {/* <NavBar/> */}
         <div className="Container">
           <main className="row">
-            <div className="col-3 grab-bag" 
-                 onDragOver={this.allowDrop}
-                 onDrop={this.handleDrop}
-            >
-          
-              <p className="title text-center center">My Owned Devices</p>
-              <div className="grab-bag-drop-box">
-              { this.renderDevices() }
-                </div>
+            <div className="col-3">
+              <GrabBag 
+                allowDrop={this.allowDrop}
+                onDrop={this.handleDrop}
+                grabBag={this.state.grabBag}
+              />
             </div>
             <div className="col-9">
               <Devices

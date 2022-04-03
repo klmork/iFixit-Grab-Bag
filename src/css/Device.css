@@ -26,20 +26,6 @@
   padding-bottom: 15px;
 }
 
-/* --------- Owned Devices ------------*/
-.Owned_Device {
-  padding: 15px;
-  background-color: rgb(214, 219, 224);
-  /* border: 1px solid rgb(73, 71, 71); */
-}
-
-/* Title disappears if screen small */
-@media only screen and (max-width: 680px) {
-  .Owned_Device {
-    padding: 0;
-  }
-}
-
 /* ------------ Title for Containers ----- */
 .title {
   font-size: x-large;

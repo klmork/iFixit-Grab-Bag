@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Device.css'
+import '../css/OwnedDevice.css'
 
 class OwnedDevice extends React.Component {
     render() { 
