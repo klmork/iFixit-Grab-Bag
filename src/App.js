@@ -43,7 +43,7 @@ class App extends React.Component {
   };
 
   // Pagination - page left and load devices
-  handleDecrement = () => {
+  handlePageDecrement = () => {
       if (this.state.page === 0) return;
 
       const page = this.state.page - 1;
@@ -51,7 +51,7 @@ class App extends React.Component {
   };
 
   // Pagination - page right and load devices
-  handleIncrement = () => {
+  handlePageIncrement = () => {
     const page = this.state.page + 1;
     this.setState({ page }, this.handleFetch);
 
@@ -66,7 +66,7 @@ class App extends React.Component {
   };
 
   // Adding copy of item to grab bag
-  handleIncrement = (device) => {
+  handleDeviceCountIncrement = (device) => {
       const grabBag = [...this.state.grabBag];
       const index = grabBag.findIndex(deviceBundle => deviceBundle.device === device);
       const deviceBundle = {...grabBag[index]};
@@ -79,7 +79,7 @@ class App extends React.Component {
   };
 
   // Removing copy of item to grab bag
-  handleDecrement = (device) => {
+  handleDeviceCountDecrement = (device) => {
     const grabBag = [...this.state.grabBag];
     const index = grabBag.findIndex(deviceBundle => deviceBundle.device === device);
     const deviceBundle = {...grabBag[index]};
@@ -143,16 +143,16 @@ class App extends React.Component {
                 onDrop={this.handleDrop}
                 grabBag={this.state.grabBag}
                 onDelete={this.handleDelete}
-                onIncrement={this.handleIncrement}
-                onDecrement={this.handleDecrement}
+                onIncrement={this.handleDeviceCountIncrement}
+                onDecrement={this.handleDeviceCountDecrement}
               />
             </div>
             <div className="col-9">
               <Devices
                 devices={devices}
                 pageNum={page}
-                onIncrement={this.handleIncrement}
-                onDecrement={this.handleDecrement}
+                onIncrement={this.handlePageIncrement}
+                onDecrement={this.handlePageDecrement}
                 onDrag={this.handleDragStart}
               />
             </div>
