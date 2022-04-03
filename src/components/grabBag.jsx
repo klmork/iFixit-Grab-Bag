@@ -12,6 +12,9 @@ class GrabGab extends React.Component {
             key={deviceBundle.device.wikiid}
             device={deviceBundle.device}
             count={deviceBundle.count}
+            onDelete={this.props.onDelete}
+            onIncrement={this.props.onIncrement}
+            onDecrement={this.props.onDecrement}
           />
         )));
       }
