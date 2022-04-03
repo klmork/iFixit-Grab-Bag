@@ -1,6 +1,6 @@
 # Grab Bag Project
 
-Device catalogging tool using iFixit API, HTML5, React.
+Device catalogging tool using iFixit API, HTML5, React, and CSS.
 
 ## Table of contents
 
@@ -22,6 +22,8 @@ Drag and drop devices from iFixit's total list of devices into a 'grab bag' of t
 Project is created with:
 
 - React version: 18.0.0
+- HTML5
+- CSS
 
 #### Getting Started with Create React App
 
