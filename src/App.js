@@ -19,6 +19,12 @@ class App extends React.Component {
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
+    // -------------------- Helper Functions ---------------------
+    allowDrop = ev => {
+      ev.preventDefault();
+    };
+    
+
   // ----------- Event Handlers --------------------------------------
 
   // Fetch data from API (only for devices currently being displayed)
@@ -51,6 +57,49 @@ class App extends React.Component {
 
   };
 
+  // Deleting items from grab bag
+  handleDelete = (deviceId) => {
+      const { grabBag } = this.state;
+      const newGrabBag = grabBag.filter(d => (d.device.wikiid !== deviceId));
+      this.setState({grabBag: newGrabBag});
+      localStorage.grabBag = JSON.stringify(newGrabBag);
+  };
+
+  // Adding copy of item to grab bag
+  handleIncrement = (device) => {
+      const grabBag = [...this.state.grabBag];
+      const index = grabBag.findIndex(deviceBundle => deviceBundle.device === device);
+      const deviceBundle = {...grabBag[index]};
+
+      deviceBundle.count++;
+      grabBag[index] = deviceBundle;
+
+      this.setState({ grabBag });
+      localStorage.grabBag = JSON.stringify(grabBag);
+  };
+
+  // Removing copy of item to grab bag
+  handleDecrement = (device) => {
+    const grabBag = [...this.state.grabBag];
+    const index = grabBag.findIndex(deviceBundle => deviceBundle.device === device);
+    const deviceBundle = {...grabBag[index]};
+
+    if (deviceBundle.count === 0)
+    {
+      let confirmAction = window.confirm("Would you like to delete " + device.display_title + " from your list of owned devices?");
+      if (confirmAction) {
+        this.handleDelete(device.wikiid);
+      } 
+      return;
+    }
+    deviceBundle.count--;
+    grabBag[index] = deviceBundle;
+
+    this.setState({ grabBag });
+    localStorage.grabBag = JSON.stringify(grabBag);
+  };
+
+  // ----- Dragging and Dropping Devices --------------
   handleDragStart = (e, v) => {
     e.dataTransfer.dropEffect = "move";
     e.dataTransfer.setData("device", v)
@@ -78,11 +127,6 @@ class App extends React.Component {
     this.setState({ grabBag });
   };
 
-  // -------------------- Helper Functions ---------------------
-  allowDrop = ev => {
-    ev.preventDefault();
-  };
-  
   // -------------------- Render ----------------------------
   //TODO: make class for containers with columns and title
   render() { 
@@ -98,6 +142,9 @@ class App extends React.Component {
                 allowDrop={this.allowDrop}
                 onDrop={this.handleDrop}
                 grabBag={this.state.grabBag}
+                onDelete={this.handleDelete}
+                onIncrement={this.handleIncrement}
+                onDecrement={this.handleDecrement}
               />
             </div>
             <div className="col-9">
