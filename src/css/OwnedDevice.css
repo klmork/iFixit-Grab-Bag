@@ -19,36 +19,81 @@
   position: absolute;
 }
 
-.count {
+.modify-device-container {
+  border: 1px solid rgb(73, 71, 71);
+  width: 20%;
   float: right;
-  padding-top: 10px;
-  padding-right: 15px;
+  height: 90%;
+  margin: 2px;
+}
+
+.count {
+  padding: 5px;
+}
+
+.delete-button {
+  padding: 0;
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 40%;
+}
+
+.change-cnt-button {
+  font-size: x-small;
+}
+
+.count-container {
+  /* margin: 5px; */
+  /* float: center; */
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  margin-top: 20%;
+}
+
+/* Count disappears if screen smallest */
+@media only screen and (max-width: 760px) {
+  .modify-device-container {
+    display: none;
+  }
+}
+
+/* Only trashcan and image if smaller */
+@media only screen and (max-width: 910px) {
+  .count-container {
+    display: none;
+  }
 }
 
 /* Title disappears if screen small */
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 960px) {
   .owned-device {
     padding: 0;
   }
   .owned-device-title {
     display: none;
   }
-}
-
-/* Count disappears if screen small */
-@media only screen and (max-width: 700px) {
   .count {
-    display: none;
+    font-size: x-small;
+  }
+  .change-cnt-button {
+    padding: 1px;
   }
 }
 
-/* Make text smaller. */
-@media only screen and (min-width: 890px) and (max-width: 1248px) {
+/* Text smaller if medium. */
+@media only screen and (min-width: 960px) and (max-width: 1248px) {
   .owned-device-title {
     font-size: x-small;
     width: 7%;
   }
-  .count {
+  .modify-device-container {
     font-size: x-small;
+  }
+  .change-cnt-button {
+    padding: 2px;
   }
 }
