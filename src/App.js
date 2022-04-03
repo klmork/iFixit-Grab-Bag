@@ -1,14 +1,12 @@
 import React from 'react';
 import './App.css';
 import Devices from './components/devices';
-import NavBar from './components/navbar';
 import GrabBag from './components/grabBag';
 import './css/Device.css';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
 class App extends React.Component {
-  
   state = {
     devices: [],
     page: 0,
@@ -18,6 +16,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.handleFetch();
+    this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
   // ----------- Event Handlers --------------------------------------
@@ -69,11 +68,13 @@ class App extends React.Component {
         {
           grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
           this.setState({ grabBag });
+          localStorage.grabBag = JSON.stringify(grabBag);
           return;
         }
       }
     }
     grabBag.push({device: data, count: 1});
+    localStorage.grabBag = JSON.stringify(grabBag);
     this.setState({ grabBag });
   };
 
