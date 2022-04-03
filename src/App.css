@@ -1,7 +1,3 @@
-/* Small screen - stack page num on top of buttons */
-@media only screen and (max-width: 320px) {
-}
-
 img {
   max-width: 100%;
 }
@@ -12,7 +8,7 @@ img {
   padding: 70px;
 }
 /* Small screen - reduce padding */
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 580px) {
   .Container {
     padding: 10px;
   }
