@@ -10,7 +10,7 @@ class Device extends React.Component {
         const srcImage = device.image.thumbnail  + " 96w, " + device.image.standard +" 300w";
         return (
             <div className="device-container">
-                <div className="Device" 
+                <div className="device" 
                     draggable="true"
                     onDragStart={(e)=> onDrag(e, JSON.stringify(device))}>
                     

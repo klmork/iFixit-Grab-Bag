@@ -60,9 +60,20 @@ class App extends React.Component {
   handleDrop = e => {
     const dataString = e.dataTransfer.getData("device");
     const data = JSON.parse(dataString);
-    let { grabBag } = this.state;
-    //TODO: check for duplicates and add counter
-    grabBag.push(data);
+    let grabBag = [...this.state.grabBag];
+
+    if (grabBag.length !== 0){
+      for (let i = 0; i < grabBag.length; i++)
+      {
+        if (grabBag[i].device.wikiid === data.wikiid)
+        {
+          grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
+          this.setState({ grabBag });
+          return;
+        }
+      }
+    }
+    grabBag.push({device: data, count: 1});
     this.setState({ grabBag });
   };
 
@@ -87,14 +98,15 @@ class App extends React.Component {
                  onDrop={this.handleDrop}
             >
           
-              <p className="title grab-bag-title text-center center">My Owned Devices</p>
+              <p className="title text-center center">My Owned Devices</p>
               <div className="grab-bag-drop-box">
             {
               //TODO: handle duplicates (add key and make sure unique)
-              this.state.grabBag.map(device => (
+              this.state.grabBag.map(deviceBundle => (
                 <OwnedDevice 
-                  key={device.wikiid}
-                  device={device}
+                  key={deviceBundle.device.wikiid}
+                  device={deviceBundle.device}
+                  count={deviceBundle.count}
                 />
                     ))
                 }
