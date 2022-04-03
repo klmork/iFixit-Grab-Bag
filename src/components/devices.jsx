@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Device from './device';
 import '../css/Devices.css';
 import '../App.css';
@@ -6,14 +6,16 @@ import DeviceNavigation from './deviceNavigation';
 
 class Devices extends React.Component {
     render() { 
-        const { devices, pageNum, onIncrement, onDecrement } = this.props;
+        const { devices, pageNum, onIncrement, onDecrement, onDrag } = this.props;
         return (
-            <div className="col-9">
+            <div>
+                <p className="title text-center center">iFixit Devices</p>
                 <div className="Devices">
                     {
                     devices.map(device => (
                         <Device 
                             key={ device.wikiid }
+                            onDrag={onDrag}
                             device={ device }
                         />
                     ))

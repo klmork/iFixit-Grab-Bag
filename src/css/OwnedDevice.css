@@ -1,0 +1,54 @@
+/* --------- Owned Devices ------------*/
+.owned-device {
+  /* padding: 15px; */
+  background-color: rgb(214, 219, 224);
+  height: 75px; /* 3px bigger than thumbnail height*/
+  box-shadow: 1px 1px 5px;
+}
+
+.owned-image {
+  float: left;
+  padding-right: 15px;
+  /* border: 1px solid rgb(73, 71, 71); */
+}
+
+.owned-device-title {
+  float: left;
+  width: 10%;
+  padding-top: 10px;
+  position: absolute;
+}
+
+.count {
+  float: right;
+  padding-top: 10px;
+  padding-right: 15px;
+}
+
+/* Title disappears if screen small */
+@media only screen and (max-width: 890px) {
+  .owned-device {
+    padding: 0;
+  }
+  .owned-device-title {
+    display: none;
+  }
+}
+
+/* Count disappears if screen small */
+@media only screen and (max-width: 700px) {
+  .count {
+    display: none;
+  }
+}
+
+/* Make text smaller. */
+@media only screen and (min-width: 890px) and (max-width: 1248px) {
+  .owned-device-title {
+    font-size: x-small;
+    width: 7%;
+  }
+  .count {
+    font-size: x-small;
+  }
+}

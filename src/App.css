@@ -1,30 +1,24 @@
-/* Centering and Scaling*/
-.center-text {
-  text-align: center;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100; /*TODO: change based on size*/
-  border: 3px solid green;
-}
-
 img {
   max-width: 100%;
 }
 
-/* Grid and Page Layout */
+/* --------- Grid and Page Layout ---------- */
 
 .Container {
   padding: 70px;
 }
+/* Small screen - reduce padding */
+@media only screen and (max-width: 580px) {
+  .Container {
+    padding: 10px;
+  }
+}
 
+/* --------- Grid --------------- */
 [class*="col-"] {
   float: left;
-  padding: 15px;
-  border: 1px solid rgb(247, 0, 255);
+  box-sizing: border-box;
+  /* border: 1px solid rgb(247, 0, 255); */
 }
 
 .row::after {
@@ -68,4 +62,13 @@ img {
 }
 .col-12 {
   width: 100%;
+}
+
+/* ------------ Grab Bag --------------- */
+.grab-bag {
+  height: 1660px;
+}
+.grab-bag-drop-box {
+  background-color: rgb(238, 242, 246);
+  height: 1353px;
 }

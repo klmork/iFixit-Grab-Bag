@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import NavBar from './components/navbar';
+import GrabBag from './components/grabBag';
+import './css/Device.css';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 
@@ -10,7 +12,8 @@ class App extends React.Component {
   state = {
     devices: [],
     page: 0,
-    numDevicesDisplayed: 12
+    numDevicesDisplayed: 12,
+    grabBag: []
   };
 
   componentDidMount() {
@@ -49,33 +52,63 @@ class App extends React.Component {
 
   };
 
+  handleDragStart = (e, v) => {
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.setData("device", v)
+  };
 
+  handleDrop = e => {
+    const dataString = e.dataTransfer.getData("device");
+    const data = JSON.parse(dataString);
+    let grabBag = [...this.state.grabBag];
+
+    if (grabBag.length !== 0){
+      for (let i = 0; i < grabBag.length; i++)
+      {
+        if (grabBag[i].device.wikiid === data.wikiid)
+        {
+          grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
+          this.setState({ grabBag });
+          return;
+        }
+      }
+    }
+    grabBag.push({device: data, count: 1});
+    this.setState({ grabBag });
+  };
+
+  // -------------------- Helper Functions ---------------------
+  allowDrop = ev => {
+    ev.preventDefault();
+  };
+  
   // -------------------- Render ----------------------------
+  //TODO: make class for containers with columns and title
   render() { 
-    const { devices } = this.state;
+    const { page, devices } = this.state;
 
-    //TODO: make grid and other components... testing as list for now
     return (
       <React.Fragment>
-        <NavBar/>
+        {/* <NavBar/> */}
         <div className="Container">
           <main className="row">
-            <div className="col-3"><span>hi</span></div>
-            <Devices
-              devices={this.state.devices}
-              pageNum={this.state.page}
-              onIncrement={this.handleIncrement}
-              onDecrement={this.handleDecrement}
-            />
+            <div className="col-3">
+              <GrabBag 
+                allowDrop={this.allowDrop}
+                onDrop={this.handleDrop}
+                grabBag={this.state.grabBag}
+              />
+            </div>
+            <div className="col-9">
+              <Devices
+                devices={devices}
+                pageNum={page}
+                onIncrement={this.handleIncrement}
+                onDecrement={this.handleDecrement}
+                onDrag={this.handleDragStart}
+              />
+            </div>
           </main>
-          {/* <div className="row">
-          <div className="col-3"></div>
-          <PageNavigation
-            pageNum={this.state.page}
-            onIncrement={this.handleIncrement}
-            onDecrement={this.handleDecrement}
-          />
-          </div> */}
         </div>
       </React.Fragment>
     );
