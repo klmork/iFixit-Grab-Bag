@@ -1,15 +1,15 @@
 import React from 'react';
-import '../css/OwnedDevice.css'
+import '../css/OwnedDevice.css';
 
 class OwnedDevice extends React.Component {
     render() { 
         const { device, count } = this.props;
 
         return (
-            <div className="Owned_Device">
-                <p className="Device_Title">{device.display_title}</p>
-                <img src={device.image.mini} alt="device"></img>
-                <div>{count}</div>
+            <div className="owned-device">
+                <img className="owned-image" src={device.image.thumbnail} alt="device"></img>
+                <span className="owned-device-title">{device.display_title}</span>
+                <span className="count">{count}</span>
             </div>
         );
     }

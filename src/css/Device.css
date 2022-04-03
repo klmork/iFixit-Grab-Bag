@@ -35,9 +35,6 @@
 }
 
 @media only screen and (max-width: 680px) {
-  .Device_Title {
-    display: none;
-  }
   .title {
     font-size: x-small;
   }
