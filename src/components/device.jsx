@@ -10,7 +10,7 @@ class Device extends React.Component {
         const { device, onDrag} = this.props;
  
         return (
-            <div className="device-container">
+            // <div className="device-container">
                 <div className="device" 
                     draggable="true"
                     onDragStart={(e)=> onDrag(e, JSON.stringify(device))}>
@@ -22,7 +22,7 @@ class Device extends React.Component {
                     <p className="center-text device-text">{device.display_title}</p>
 
                 </div>
-            </div>
+            // </div>
         );
     }
 }

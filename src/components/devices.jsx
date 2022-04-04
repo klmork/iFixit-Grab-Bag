@@ -10,7 +10,7 @@ class Devices extends React.Component {
         return (
             <div>
                 <p className="title text-center center">iFixit Devices</p>
-                <div className="Devices">
+                <div className="devices">
                     {
                     devices.map(device => (
                         <Device 

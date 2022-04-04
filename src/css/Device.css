@@ -25,6 +25,8 @@
 .device-container {
   padding-top: 15px;
   padding-bottom: 15px;
+  /* grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fill, 120px); */
 }
 
 /* ------------ Title for Containers ----- */
