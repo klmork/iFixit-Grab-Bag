@@ -136,7 +136,7 @@ class App extends React.Component {
       <React.Fragment>
         {/* <NavBar/> */}
         <div className="Container">
-          <main className="row">
+          <main>
             <div className="col-3">
               <GrabBag 
                 allowDrop={this.allowDrop}
