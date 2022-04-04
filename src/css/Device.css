@@ -4,6 +4,7 @@
   cursor: move;
   box-shadow: 2px 2px 10px;
   background-color: #a7a4a4;
+  max-width: 300px;
 }
 
 .device-text {
@@ -24,6 +25,8 @@
 .device-container {
   padding-top: 15px;
   padding-bottom: 15px;
+  /* grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fill, 120px); */
 }
 
 /* ------------ Title for Containers ----- */
