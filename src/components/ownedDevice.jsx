@@ -12,7 +12,7 @@ class OwnedDevice extends React.Component {
         return (
             <div className="owned-device">
                 <img className="owned-image" src={device.image.thumbnail} alt="device"></img>
-                <span className="owned-device-title">{device.display_title}</span>
+                <span className="owned-device-title">{device.title}</span>
 
                 <div className="modify-device-container">
                     <button 

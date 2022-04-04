@@ -19,7 +19,7 @@ class Device extends React.Component {
                     <DeviceImg
                         device={device}
                     />
-                    <p className="center-text device-text">{device.display_title}</p>
+                    <p className="center-text device-text">{device.title}</p>
 
                 </div>
             // </div>
