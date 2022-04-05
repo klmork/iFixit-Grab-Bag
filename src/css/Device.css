@@ -1,32 +1,24 @@
 .device {
-  /* border: 1px solid rgb(73, 71, 71); */
-  /*position: absolute; /*for dragging*/
   cursor: move;
-  box-shadow: 2px 2px 10px;
+  /* box-shadow: 2px 2px 10px; */
   background-color: #a7a4a4;
   max-width: 300px;
+  font-size: medium;
+  transition: 0.1s all ease-in-out;
 }
 
 .device-text {
-  height: 50px;
-  /* background-color: #a7a4a4; */
+  font-size: medium;
 }
 
-/* .device-text:hover {
-  background-color: rgb(73, 71, 71);
-  color: #fdfdfd;
-} */
-
 .device:hover {
-  background-color: rgb(73, 71, 71);
-  color: #fdfdfd;
+  background-color: #a7a4a477;
+  transform: scale(1.05);
 }
 
 .device-container {
   padding-top: 15px;
   padding-bottom: 15px;
-  /* grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(auto-fill, 120px); */
 }
 
 /* ------------ Title for Containers ----- */
@@ -35,6 +27,7 @@
   font-weight: bold;
   background-color: #d3d3d3;
   height: 80px;
+  padding: 15px;
 }
 
 @media only screen and (max-width: 680px) {
