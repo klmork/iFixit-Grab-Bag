@@ -2,51 +2,55 @@
 .owned-device {
   background-color: rgb(214, 219, 224);
   height: 75px; /* 3px bigger than thumbnail height*/
-  box-shadow: 1px 1px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.owned-device:hover {
+  background-color: rgb(180, 211, 243);
+  transform: scale(1.01);
 }
 
 .owned-image {
   float: left;
   padding-right: 15px;
-}
-
-.owned-device-title {
-  float: left;
-  width: 10%;
-  padding-top: 10px;
-  position: absolute;
+  max-width: 60%;
 }
 
 .modify-device-container {
-  width: 20%;
-  float: right;
-  height: 90%;
-  margin: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 15px;
 }
 
 .count {
-  padding: 5px;
+  padding: 2px;
 }
 
 .delete-button {
+  width: 20px;
+  height: 20px;
   padding: 0;
-  width: auto;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 40%;
+  margin-right: 5%;
+  margin-left: 5%;
+  transition: 0.01s all ease-in-out;
+  background: none;
+  border: none;
+}
+.delete-button:hover {
+  transform: scale(1.15);
 }
 
 .change-cnt-button {
   font-size: x-small;
 }
 
-.count-container {
-  display: flex;
-  margin-top: 20%;
+.owned-device-title {
+  width: 50%;
 }
-
 /* Count disappears if screen smallest */
 @media only screen and (max-width: 760px) {
   .modify-device-container {
@@ -62,7 +66,7 @@
 }
 
 /* Title disappears if screen small */
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 1030px) {
   .owned-device {
     padding: 0;
   }
@@ -81,7 +85,6 @@
 @media only screen and (min-width: 960px) and (max-width: 1248px) {
   .owned-device-title {
     font-size: x-small;
-    width: 7%;
   }
   .modify-device-container {
     font-size: x-small;

@@ -1,5 +1,7 @@
 import React from 'react';
 import OwnedDevice from './ownedDevice';
+import '../css/Device.css';
+import '../App.css';
 
 class GrabGab extends React.Component {
     // -------- Helper Methods -----------------------------

@@ -33,13 +33,20 @@ class App extends React.Component {
     const offset = "offset=" + page * numDevicesDisplayed;
     const limit = "&limit=" + numDevicesDisplayed;
 
+    // fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/iPhone%204")//API_URL+offset+limit)
+    //     .then((res) => res.json())
+    //     .then((json) => {
+    //         this.setState({
+    //           devices: [json ]
+    //         });
+    //     })
     fetch(API_URL+offset+limit)
-        .then((res) => res.json())
-        .then((json) => {
-            this.setState({
-              devices: json 
-            });
-        })
+    .then((res) => res.json())
+    .then((json) => {
+        this.setState({
+          devices: json
+        });
+    })
   };
 
   // Pagination - page left and load devices
@@ -86,7 +93,7 @@ class App extends React.Component {
 
     if (deviceBundle.count === 0)
     {
-      let confirmAction = window.confirm("Would you like to delete " + device.display_title + " from your list of owned devices?");
+      let confirmAction = window.confirm("Would you like to delete " + device.title + " from your list of owned devices?");
       if (confirmAction) {
         this.handleDelete(device.wikiid);
       } 
@@ -137,7 +144,7 @@ class App extends React.Component {
         {/* <NavBar/> */}
         <div className="Container">
           <main>
-            <div className="col-3">
+            <div className="col-4">
               <GrabBag 
                 allowDrop={this.allowDrop}
                 onDrop={this.handleDrop}
@@ -147,7 +154,7 @@ class App extends React.Component {
                 onDecrement={this.handleDeviceCountDecrement}
               />
             </div>
-            <div className="col-9">
+            <div className="col-8">
               <Devices
                 devices={devices}
                 pageNum={page}

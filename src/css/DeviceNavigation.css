@@ -37,3 +37,6 @@
   color: white;
   cursor: pointer;
 }
+.button-clickable:hover {
+  background-color: #2f8da5be;
+}
