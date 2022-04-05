@@ -144,7 +144,7 @@ class App extends React.Component {
         {/* <NavBar/> */}
         <div className="Container">
           <main>
-            <div className="col-3">
+            <div className="col-4">
               <GrabBag 
                 allowDrop={this.allowDrop}
                 onDrop={this.handleDrop}
@@ -154,7 +154,7 @@ class App extends React.Component {
                 onDecrement={this.handleDeviceCountDecrement}
               />
             </div>
-            <div className="col-9">
+            <div className="col-8">
               <Devices
                 devices={devices}
                 pageNum={page}

@@ -8,7 +8,7 @@
   padding: 15px;
 }
 
-@media only screen and (min-width: 680px) {
+@media only screen and (min-width: 880px) {
   .devices {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -18,7 +18,7 @@
   }
 }
 
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1400px) {
   .devices {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
