@@ -23,6 +23,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  margin-left: 15px;
 }
 
 .count {
@@ -33,7 +34,8 @@
   width: 20px;
   height: 20px;
   padding: 0;
-  margin-right: 10px;
+  margin-right: 5%;
+  margin-left: 5%;
   transition: 0.01s all ease-in-out;
   background: none;
   border: none;
@@ -46,6 +48,9 @@
   font-size: x-small;
 }
 
+.owned-device-title {
+  width: 50%;
+}
 /* Count disappears if screen smallest */
 @media only screen and (max-width: 760px) {
   .modify-device-container {
