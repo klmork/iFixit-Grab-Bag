@@ -37,10 +37,12 @@ class App extends React.Component {
   //                 Helper Functions                               //
   ////////////////////////////////////////////////////////////////////
     
+  // ----- Allows drop for drag and drop (cursor on computer) -----
   allowDrop = ev => {
     ev.preventDefault();
   };
 
+  // --------- Pickup and Drop for touch (on iPhone) ------------
   pickup = (ev, d) => {
     this.setState({moving: d})
   };
@@ -49,29 +51,34 @@ class App extends React.Component {
     if (this.state.moving !== null)
     {
       let data = {...this.state.moving};
-      let grabBag = [];
-      if (this.state.grabBag !== null)
+      this.setGrabBag(data);
+      this.setState({moving: null});
+    }
+  };
+
+  // ------------ Set Grab Bag on Drop -----------------------
+  setGrabBag = data => {
+    let grabBag = [];
+    if (this.state.grabBag !== null)
+    {
+      grabBag = [...this.state.grabBag];
+    }
+
+    if (grabBag.length !== 0){
+      for (let i = 0; i < grabBag.length; i++)
       {
-        grabBag = [...this.state.grabBag];
-      }
-  
-      if (grabBag.length !== 0){
-        for (let i = 0; i < grabBag.length; i++)
+        if (grabBag[i].device.wikiid === data.wikiid)
         {
-          if (grabBag[i].device.wikiid === data.wikiid)
-          {
-            grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
-            this.setState({ grabBag });
-            localStorage.grabBag = JSON.stringify(grabBag);
-            return;
-          }
+          grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
+          this.setState({ grabBag });
+          localStorage.grabBag = JSON.stringify(grabBag);
+          return;
         }
       }
-      grabBag.push({device: data, count: 1});
-      localStorage.grabBag = JSON.stringify(grabBag);
-      this.setState({ grabBag });
-        this.setState({moving: null});
     }
+    grabBag.push({device: data, count: 1});
+    localStorage.grabBag = JSON.stringify(grabBag);
+    this.setState({ grabBag });
   };
     
    // Create object for categories of devices you can seach through
@@ -232,27 +239,7 @@ class App extends React.Component {
   handleDrop = e => {
     const dataString = e.dataTransfer.getData("device");
     const data = JSON.parse(dataString);
-    let grabBag = [];
-    if (this.state.grabBag !== null)
-    {
-      grabBag = [...this.state.grabBag];
-    }
-
-    if (grabBag.length !== 0){
-      for (let i = 0; i < grabBag.length; i++)
-      {
-        if (grabBag[i].device.wikiid === data.wikiid)
-        {
-          grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
-          this.setState({ grabBag });
-          localStorage.grabBag = JSON.stringify(grabBag);
-          return;
-        }
-      }
-    }
-    grabBag.push({device: data, count: 1});
-    localStorage.grabBag = JSON.stringify(grabBag);
-    this.setState({ grabBag });
+    this.updateGrabBag(data);
   };
 
   ////////////////////////////////////////////////////////////////////
