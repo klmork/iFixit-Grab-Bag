@@ -48,7 +48,7 @@ class App extends React.Component {
   drop = ev => {
     if (this.state.moving !== null)
     {
-      data = {...this.state.moving};
+      let data = {...this.state.moving};
       let grabBag = [];
       if (this.state.grabBag !== null)
       {
