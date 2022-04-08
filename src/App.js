@@ -239,7 +239,7 @@ class App extends React.Component {
   handleDrop = e => {
     const dataString = e.dataTransfer.getData("device");
     const data = JSON.parse(dataString);
-    this.updateGrabBag(data);
+    this.setGrabBag(data);
   };
 
   ////////////////////////////////////////////////////////////////////
