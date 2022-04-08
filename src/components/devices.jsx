@@ -17,6 +17,7 @@ class Devices extends React.Component {
                             key={ device.wikiid }
                             onDrag={onDrag}
                             device={ device }
+                            onTouchStart={this.props.onTouchStart}
                         />
                     ))
                 }
@@ -25,6 +26,7 @@ class Devices extends React.Component {
                     pageNum={pageNum}
                     onIncrement={onIncrement}
                     onDecrement={onDecrement}
+                    onTouchStart={this.props.onTouchStart}
                 />
             </div>
         );
