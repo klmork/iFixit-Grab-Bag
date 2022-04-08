@@ -8,7 +8,7 @@ import GrabBag from './components/grabBag';
 import NavBar from './components/navBar';
 
 const MAX_DISPLAYED = 12;
-const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
+const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY";
 const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
 
 class App extends React.Component {
@@ -39,7 +39,7 @@ class App extends React.Component {
     // and the associated api call for each one
   createCategoryObjects = (deviceCategories) =>
   {
-    const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
+    const catObjects = [{deviceCategory: "All", url: API_URL + "?display=hierarchy"}];
     deviceCategories.forEach(cat => {
       catObjects.push(
         { 
@@ -54,7 +54,7 @@ class App extends React.Component {
   // url for requesting devices within appropriate range based on page number
   getPageOffsetURL() {
     const { page, numDevicesDisplayed } = this.state;
-    const offset = "offset=" + page * numDevicesDisplayed;
+    const offset = "?offset=" + page * numDevicesDisplayed;
     const limit = "&limit=" + numDevicesDisplayed;
     return API_URL+offset+limit;
   }
@@ -105,7 +105,7 @@ class App extends React.Component {
 
   /*TODO: combine with above */
   handleFetchItem = item => {
-    fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/"+item)
+    fetch(API_URL+"/"+item)
         .then((res) => res.json())
         .then((json) => this.setDevicesOneItem(json));
   };
@@ -120,7 +120,7 @@ class App extends React.Component {
 
   // Fetch list of categories for nav bar options (narrow search)
   handleFetchCategories = () => {
-    const url = API_URL + "display=hierarchy";
+    const url = API_URL + "?display=hierarchy";
     fetch(url)
     .then((res) => res.json())
     .then((json) => {
