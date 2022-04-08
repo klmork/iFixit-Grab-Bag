@@ -6,7 +6,7 @@ import '../App.css';
 class GrabGab extends React.Component {
     // -------- Helper Methods -----------------------------
     renderDevices = () => {
-        if (this.props.grabBag.length === null || this.props.grabBag.length === 0)
+        if (this.props.grabBag === null || this.props.grabBag.length === 0)
           return <p className="center">Drop Files Here</p>
     
         return (this.props.grabBag.map(deviceBundle => (
