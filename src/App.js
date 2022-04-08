@@ -29,32 +29,34 @@ class App extends React.Component {
   ////////////////////////////////////////////////////////////////////
   //                 Helper Functions                               //
   ////////////////////////////////////////////////////////////////////
-    allowDrop = ev => {
-      ev.preventDefault();
-    };
     
-     // Create object for categories of devices you can seach through
+  allowDrop = ev => {
+    ev.preventDefault();
+  };
+    
+   // Create object for categories of devices you can seach through
     // and the associated api call for each one
-    createCategoryObjects = (deviceCategories) =>
-    {
-      const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
-      deviceCategories.forEach(cat => {
-        catObjects.push(
-          { 
-            deviceCategory: cat,
-            url: CONTENT_HIERARCHY_URL+cat
-          })
+  createCategoryObjects = (deviceCategories) =>
+  {
+    const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
+    deviceCategories.forEach(cat => {
+      catObjects.push(
+        { 
+          deviceCategory: cat,
+          url: CONTENT_HIERARCHY_URL+cat
+        })
 
-      });
-      return catObjects;
-    };
+    });
+    return catObjects;
+  };
 
-    getPageOffsetURL() {
-      const { page, numDevicesDisplayed } = this.state;
-      const offset = "offset=" + page * numDevicesDisplayed;
-      const limit = "&limit=" + numDevicesDisplayed;
-      return API_URL+offset+limit;
-    }
+  // url for requesting devices within appropriate range based on page number
+  getPageOffsetURL() {
+    const { page, numDevicesDisplayed } = this.state;
+    const offset = "offset=" + page * numDevicesDisplayed;
+    const limit = "&limit=" + numDevicesDisplayed;
+    return API_URL+offset+limit;
+  }
 
   ////////////////////////////////////////////////////////////////////
   //                   Event Handlers                               //
@@ -64,10 +66,7 @@ class App extends React.Component {
 
   // Fetch data from API (only for devices currently being displayed)
   handleFetch = () => {
-    const { page, numDevicesDisplayed } = this.state;
-    const offset = "offset=" + page * numDevicesDisplayed;
-    const limit = "&limit=" + numDevicesDisplayed;
-    fetch(API_URL+offset+limit)
+    fetch(this.getPageOffsetURL())
     .then((res) => res.json())
     .then((json) => {
         this.setState({
