@@ -198,7 +198,11 @@ class App extends React.Component {
   handleDrop = e => {
     const dataString = e.dataTransfer.getData("device");
     const data = JSON.parse(dataString);
-    let grabBag = [...this.state.grabBag];
+    let grabBag = [];
+    if (this.state.grabBag !== null)
+    {
+      grabBag = [...this.state.grabBag];
+    }
 
     if (grabBag.length !== 0){
       for (let i = 0; i < grabBag.length; i++)
