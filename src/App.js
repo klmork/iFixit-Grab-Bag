@@ -59,6 +59,37 @@ class App extends React.Component {
     return API_URL+offset+limit;
   }
 
+  // ----------------------- Fetching from API -----------------------
+  
+  // Set list of devices to a single device.
+  setDevicesOneItem(json)
+  {
+    this.setState({
+      devices: [json] // device needs to be wrapped in list since single device
+    });
+  }
+
+  // Set list of devices to display based on page numbers.
+  setDevices(json)
+  {
+    this.setState({
+      devices: json
+    });
+  }
+
+  // Update navbar drop-down category after clicking on a parent category.
+  // If a node is selected, set device list to that node.
+  setCategory(json)
+  {
+      // if no children, render device
+      if (json.children.length === 0) {
+        this.handleFetchItem(json.wiki_title);
+      } else {
+        this.setState({
+          deviceCategories: this.createCategoryObjects(json.children)
+        });
+      }   
+  }
   ////////////////////////////////////////////////////////////////////
   //                   Event Handlers                               //
   ////////////////////////////////////////////////////////////////////
@@ -69,22 +100,14 @@ class App extends React.Component {
   handleFetch = apiUrl => {
     fetch(apiUrl)
     .then((res) => res.json())
-    .then((json) => {
-        this.setState({
-          devices: json
-        });
-    })
+    .then((json) => this.setDevices(json));
   };
 
   /*TODO: combine with above */
   handleFetchItem = item => {
     fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/"+item)
         .then((res) => res.json())
-        .then((json) => {
-            this.setState({
-              devices: [json] // device needs to be wrapped in list since single device
-            });
-        })
+        .then((json) => this.setDevicesOneItem(json));
   };
 
   /* TODO: combine with above */
@@ -92,16 +115,7 @@ class App extends React.Component {
 
     fetch(url)
     .then((res) => res.json())
-    .then((json) => {
-      // if no children, render device
-      if (json.children.length === 0) {
-        this.handleFetchItem(json.wiki_title);
-      } else {
-        this.setState({
-          deviceCategories: this.createCategoryObjects(json.children)
-        });
-      }    
-    })
+    .then((json) => this.setCategory(json));
   };
 
   // Fetch list of categories for nav bar options (narrow search)
