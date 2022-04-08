@@ -22,7 +22,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const url = this.getPageOffsetURL();
-    this.handleFetch(url);
+    this.handleFetch(url, this.setDevices);
     this.handleFetchCategories();
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
@@ -62,25 +62,22 @@ class App extends React.Component {
   // ----------------------- Fetching from API -----------------------
   
   // Set list of devices to a single device.
-  setDevicesOneItem(json)
-  {
+  setDevicesOneItem = json => {
     this.setState({
       devices: [json] // device needs to be wrapped in list since single device
     });
-  }
+  };
 
   // Set list of devices to display based on page numbers.
-  setDevices(json)
-  {
+  setDevices = json => {
     this.setState({
       devices: json
     });
-  }
+  };
 
   // Update navbar drop-down category after clicking on a parent category.
   // If a node is selected, set device list to that node.
-  setCategory(json)
-  {
+  setCategory = json => {
       // if no children, render device
       if (json.children.length === 0) {
         this.handleFetchItem(json.wiki_title);
@@ -97,10 +94,10 @@ class App extends React.Component {
   // ----------------------- Fetching from API -----------------------
 
   // Fetch data from API (only for devices currently being displayed)
-  handleFetch = apiUrl => {
+  handleFetch = (apiUrl, setMyData) => {
     fetch(apiUrl)
     .then((res) => res.json())
-    .then((json) => this.setDevices(json));
+    .then((json) => setMyData(json));
   };
 
   /*TODO: combine with above */
@@ -135,7 +132,7 @@ class App extends React.Component {
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
         this.handleFetchCategories();
-        this.handleFetch(this.getPageOffsetURL());
+        this.handleFetch(this.getPageOffsetURL(), this.setDevices);
       }
       else {
       
@@ -150,13 +147,13 @@ class App extends React.Component {
       if (this.state.page === 0) return;
 
       const page = this.state.page - 1;
-      this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL()));
+      this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL(), this.setDevices));
   };
 
   // Pagination - page right and load devices
   handlePageIncrement = () => {
     const page = this.state.page + 1;
-    this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL()));
+    this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL(), this.setDevices));
 
   };
 
