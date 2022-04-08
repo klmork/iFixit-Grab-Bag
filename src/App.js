@@ -48,6 +48,28 @@ class App extends React.Component {
   drop = ev => {
     if (this.state.moving !== null)
     {
+      data = {...this.state.moving};
+      let grabBag = [];
+      if (this.state.grabBag !== null)
+      {
+        grabBag = [...this.state.grabBag];
+      }
+  
+      if (grabBag.length !== 0){
+        for (let i = 0; i < grabBag.length; i++)
+        {
+          if (grabBag[i].device.wikiid === data.wikiid)
+          {
+            grabBag[i] = {device: grabBag[i].device, count: grabBag[i].count + 1};
+            this.setState({ grabBag });
+            localStorage.grabBag = JSON.stringify(grabBag);
+            return;
+          }
+        }
+      }
+      grabBag.push({device: data, count: 1});
+      localStorage.grabBag = JSON.stringify(grabBag);
+      this.setState({ grabBag });
         this.setState({moving: null});
     }
   };
