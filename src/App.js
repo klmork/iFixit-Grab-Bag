@@ -100,14 +100,6 @@ class App extends React.Component {
     .then((json) => setMyData(json));
   };
 
-  /* TODO: combine with above */
-  handleFetchCategory = (url) => {
-
-    fetch(url)
-    .then((res) => res.json())
-    .then((json) => this.setCategory(json));
-  };
-
   // Fetch list of categories for nav bar options (narrow search)
   handleFetchCategories = () => {
     const url = API_URL + "?display=hierarchy";
@@ -129,7 +121,7 @@ class App extends React.Component {
       }
       else {
       
-        this.handleFetchCategory(cat.url);
+        this.handleFetch(cat.url, this.setCategory);
       }
   };
 
