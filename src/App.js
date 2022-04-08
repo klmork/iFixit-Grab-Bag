@@ -247,6 +247,7 @@ class App extends React.Component {
           categories ={this.state.deviceCategories}
           onCategorySelection={this.handleCategorySelection}
         />
+        <p>{"Hi " + this.state.moving}</p>
         <div className="Container">
           <main>
             <div className="col-4">
