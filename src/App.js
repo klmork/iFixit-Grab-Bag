@@ -7,7 +7,7 @@ import Devices from './components/devices';
 import GrabBag from './components/grabBag';
 import NavBar from './components/navBar';
 
-
+const MAX_DISPLAYED = 12;
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
 
@@ -15,7 +15,7 @@ class App extends React.Component {
   state = {
     devices: [],
     page: 0,
-    numDevicesDisplayed: 12,
+    numDevicesDisplayed: MAX_DISPLAYED,
     grabBag: [],
     deviceCategories: []
   };
