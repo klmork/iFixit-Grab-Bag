@@ -6,10 +6,8 @@ import Trash from '../assets/trash.png';
 class OwnedDevice extends React.Component {
     render() { 
         const { device, count } = this.props;
-
-        /* TODO: break into child classes */
+        
         /* TODO: add option to delete on phone / tablets */
-
         return (
             <div className="owned-device">
                 <img className="owned-image" src={device.image.thumbnail} alt="device"></img>
