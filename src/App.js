@@ -21,7 +21,8 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.handleFetch();
+    const url = this.getPageOffsetURL();
+    this.handleFetch(url);
     this.handleFetchCategories();
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
@@ -65,8 +66,8 @@ class App extends React.Component {
   // ----------------------- Fetching from API -----------------------
 
   // Fetch data from API (only for devices currently being displayed)
-  handleFetch = () => {
-    fetch(this.getPageOffsetURL())
+  handleFetch = apiUrl => {
+    fetch(apiUrl)
     .then((res) => res.json())
     .then((json) => {
         this.setState({
@@ -120,7 +121,7 @@ class App extends React.Component {
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
         this.handleFetchCategories();
-        this.handleFetch();
+        this.handleFetch(this.getPageOffsetURL());
       }
       else {
       
@@ -135,13 +136,13 @@ class App extends React.Component {
       if (this.state.page === 0) return;
 
       const page = this.state.page - 1;
-      this.setState({ page }, this.handleFetch);
+      this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL()));
   };
 
   // Pagination - page right and load devices
   handlePageIncrement = () => {
     const page = this.state.page + 1;
-    this.setState({ page }, this.handleFetch);
+    this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL()));
 
   };
 
