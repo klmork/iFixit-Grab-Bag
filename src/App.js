@@ -2,20 +2,24 @@ import React from 'react';
 import './App.css';
 import Devices from './components/devices';
 import GrabBag from './components/grabBag';
+import NavBar from './components/navBar';
 import './css/Device.css';
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
+const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
 
 class App extends React.Component {
   state = {
     devices: [],
     page: 0,
     numDevicesDisplayed: 12,
-    grabBag: []
+    grabBag: [],
+    deviceCategories: []
   };
 
   componentDidMount() {
     this.handleFetch();
+    this.handleFetchCategories();
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
@@ -24,6 +28,41 @@ class App extends React.Component {
       ev.preventDefault();
     };
     
+        // Create object for categories of devices you can seach through
+    // and the associated api call for each one
+    createCategoryObjects = (deviceCategories) =>
+    {
+      const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
+      deviceCategories.forEach(cat => {
+        catObjects.push(
+          { 
+            deviceCategory: cat,
+            url: CONTENT_HIERARCHY_URL+cat
+          })
+
+      });
+      return catObjects;
+    };
+
+    // createCategoryObjectsFromChildren = children =>
+    // {
+    //   const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
+    //   children.forEach(child => {
+    //     catObjects.push(
+    //       { 
+    //         deviceCategory: cat,
+    //         url: CONTENT_HIERARCHY_URL+cat
+    //       })
+
+    //   });
+    //   return catObjects;
+    // };
+    getPageOffsetURL() {
+      const { page, numDevicesDisplayed } = this.state;
+      const offset = "offset=" + page * numDevicesDisplayed;
+      const limit = "&limit=" + numDevicesDisplayed;
+      return API_URL+offset+limit;
+    }
 
   // ----------- Event Handlers --------------------------------------
 
@@ -32,14 +71,6 @@ class App extends React.Component {
     const { page, numDevicesDisplayed } = this.state;
     const offset = "offset=" + page * numDevicesDisplayed;
     const limit = "&limit=" + numDevicesDisplayed;
-
-    // fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/iPhone%204")//API_URL+offset+limit)
-    //     .then((res) => res.json())
-    //     .then((json) => {
-    //         this.setState({
-    //           devices: [json ]
-    //         });
-    //     })
     fetch(API_URL+offset+limit)
     .then((res) => res.json())
     .then((json) => {
@@ -49,6 +80,65 @@ class App extends React.Component {
     })
   };
 
+  /*TODO: combine with above */
+  handleFetchItem = item => {
+    fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/"+item)
+        .then((res) => res.json())
+        .then((json) => {
+            this.setState({
+              devices: [json] // device needs to be wrapped in list since single device
+            });
+        })
+  };
+      // fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/iPhone%204")//API_URL+offset+limit)
+    //     .then((res) => res.json())
+    //     .then((json) => {
+    //         this.setState({
+    //           devices: [json ]
+    //         });
+    //     })
+
+  /* TODO: combine with above */
+  handleFetchCategory = (url) => {
+
+    fetch(url)
+    .then((res) => res.json())
+    .then((json) => {
+      // if no children, render device
+      if (json.children.length === 0) {
+        this.handleFetchItem(json.wiki_title);
+      } else {
+        this.setState({
+          deviceCategories: this.createCategoryObjects(json.children)
+        });
+      }    
+    })
+  };
+
+    // Fetch list of categories for nav bar options (narrow search)
+    handleFetchCategories = () => {
+      const url = API_URL + "display=hierarchy";
+      fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+          this.setState({
+            deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
+          });
+      })
+     };
+
+  handleCategorySelection = cat => {
+      if (cat.deviceCategory === "All") {
+        this.handleFetchCategories();
+        this.handleFetch();
+      }
+      else {
+      
+        this.handleFetchCategory(cat.url);
+      }
+
+      // console.log(url);
+  };
   // Pagination - page left and load devices
   handlePageDecrement = () => {
       if (this.state.page === 0) return;
@@ -141,7 +231,10 @@ class App extends React.Component {
 
     return (
       <React.Fragment>
-        {/* <NavBar/> */}
+        <NavBar
+          categories ={this.state.deviceCategories}
+          onCategorySelection={this.handleCategorySelection}
+        />
         <div className="Container">
           <main>
             <div className="col-4">
