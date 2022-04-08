@@ -1,9 +1,12 @@
 import React from 'react';
+
 import './App.css';
+import './css/Device.css';
+
 import Devices from './components/devices';
 import GrabBag from './components/grabBag';
 import NavBar from './components/navBar';
-import './css/Device.css';
+
 
 const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
 const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
@@ -23,12 +26,14 @@ class App extends React.Component {
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
-    // -------------------- Helper Functions ---------------------
+  ////////////////////////////////////////////////////////////////////
+  //                 Helper Functions                               //
+  ////////////////////////////////////////////////////////////////////
     allowDrop = ev => {
       ev.preventDefault();
     };
     
-        // Create object for categories of devices you can seach through
+     // Create object for categories of devices you can seach through
     // and the associated api call for each one
     createCategoryObjects = (deviceCategories) =>
     {
@@ -44,19 +49,6 @@ class App extends React.Component {
       return catObjects;
     };
 
-    // createCategoryObjectsFromChildren = children =>
-    // {
-    //   const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
-    //   children.forEach(child => {
-    //     catObjects.push(
-    //       { 
-    //         deviceCategory: cat,
-    //         url: CONTENT_HIERARCHY_URL+cat
-    //       })
-
-    //   });
-    //   return catObjects;
-    // };
     getPageOffsetURL() {
       const { page, numDevicesDisplayed } = this.state;
       const offset = "offset=" + page * numDevicesDisplayed;
@@ -64,7 +56,11 @@ class App extends React.Component {
       return API_URL+offset+limit;
     }
 
-  // ----------- Event Handlers --------------------------------------
+  ////////////////////////////////////////////////////////////////////
+  //                   Event Handlers                               //
+  ////////////////////////////////////////////////////////////////////
+  
+  // ----------------------- Fetching from API -----------------------
 
   // Fetch data from API (only for devices currently being displayed)
   handleFetch = () => {
@@ -90,13 +86,6 @@ class App extends React.Component {
             });
         })
   };
-      // fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/iPhone%204")//API_URL+offset+limit)
-    //     .then((res) => res.json())
-    //     .then((json) => {
-    //         this.setState({
-    //           devices: [json ]
-    //         });
-    //     })
 
   /* TODO: combine with above */
   handleFetchCategory = (url) => {
@@ -115,18 +104,20 @@ class App extends React.Component {
     })
   };
 
-    // Fetch list of categories for nav bar options (narrow search)
-    handleFetchCategories = () => {
-      const url = API_URL + "display=hierarchy";
-      fetch(url)
-      .then((res) => res.json())
-      .then((json) => {
-          this.setState({
-            deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
-          });
-      })
-     };
+  // Fetch list of categories for nav bar options (narrow search)
+  handleFetchCategories = () => {
+    const url = API_URL + "display=hierarchy";
+    fetch(url)
+    .then((res) => res.json())
+    .then((json) => {
+        this.setState({
+          deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
+        });
+    })
+  };
 
+  // ----------------------- Searching by Category -----------------------
+  
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
         this.handleFetchCategories();
@@ -136,9 +127,10 @@ class App extends React.Component {
       
         this.handleFetchCategory(cat.url);
       }
-
-      // console.log(url);
   };
+
+  // ----------------------- Page Navigation for Device List -----------------------
+
   // Pagination - page left and load devices
   handlePageDecrement = () => {
       if (this.state.page === 0) return;
@@ -153,6 +145,8 @@ class App extends React.Component {
     this.setState({ page }, this.handleFetch);
 
   };
+
+  // ----------------------- Grab Bag -----------------------
 
   // Deleting items from grab bag
   handleDelete = (deviceId) => {
@@ -197,6 +191,7 @@ class App extends React.Component {
   };
 
   // ----- Dragging and Dropping Devices --------------
+
   handleDragStart = (e, v) => {
     e.dataTransfer.dropEffect = "move";
     e.dataTransfer.setData("device", v)
@@ -224,7 +219,10 @@ class App extends React.Component {
     this.setState({ grabBag });
   };
 
-  // -------------------- Render ----------------------------
+  ////////////////////////////////////////////////////////////////////
+  //                        Render                                  //
+  ////////////////////////////////////////////////////////////////////
+
   //TODO: make class for containers with columns and title
   render() { 
     const { page, devices } = this.state;
