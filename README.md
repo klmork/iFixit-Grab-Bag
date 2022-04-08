@@ -23,6 +23,8 @@ Project is created with:
 
 - React version: 18.0.0
 - HTML5
+  - Drag and Drop API
+  - Storage Engine
 - CSS
 
 #### Getting Started with Create React App
