@@ -22,7 +22,9 @@ class Device extends React.Component {
         return (
                 <div className="device" 
                     draggable="true"
-                    onDragStart={(e)=> onDrag(e, JSON.stringify(device))}>
+                    onDragStart={(e)=> onDrag(e, JSON.stringify(device))}
+                    onTouchStart={(e) => this.props.onTouchStart(e, device)}
+                >
                     
                     
                     {this.getImage()}
