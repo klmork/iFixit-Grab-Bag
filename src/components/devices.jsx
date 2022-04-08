@@ -17,7 +17,7 @@ class Devices extends React.Component {
                             key={ device.wikiid }
                             onDrag={onDrag}
                             device={ device }
-                            onTouchStart={onDrag}
+                            onTouchStart={this.props.onTouchStart}
                         />
                     ))
                 }

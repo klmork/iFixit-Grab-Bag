@@ -41,16 +41,16 @@ class App extends React.Component {
     ev.preventDefault();
   };
 
-  // pickup = ev => {
-  //   this.setState({moving: ev.target})
-  // };
+  pickup = ev => {
+    this.setState({moving: ev.target})
+  };
 
-  // drop = ev => {
-  //   if (this.state.moving !== null)
-  //   {
-  //       this.setState({moving: null});
-  //   }
-  // };
+  drop = ev => {
+    if (this.state.moving !== null)
+    {
+        this.setState({moving: null});
+    }
+  };
     
    // Create object for categories of devices you can seach through
     // and the associated api call for each one
@@ -254,7 +254,7 @@ class App extends React.Component {
               <GrabBag 
                 allowDrop={this.allowDrop}
                 onDrop={this.handleDrop}
-                onTouchEnd={this.handleDrop}
+                onTouchEnd={this.drop}
                 grabBag={this.state.grabBag}
                 onDelete={this.handleDelete}
                 onIncrement={this.handleDeviceCountIncrement}
@@ -268,7 +268,7 @@ class App extends React.Component {
                 onIncrement={this.handlePageIncrement}
                 onDecrement={this.handlePageDecrement}
                 onDrag={this.handleDragStart}
-                onTouchStart={this.handleDragStart}
+                onTouchStart={this.pickup}
               />
             </div>
           </main>
