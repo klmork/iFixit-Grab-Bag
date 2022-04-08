@@ -115,6 +115,7 @@ class App extends React.Component {
 
   // ----------------------- Searching by Category -----------------------
   
+  // Nav bar handlers -> handle if selected category or 'All'
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
         this.handleFetch(DEVICE_URL + "?display=hierarchy", this.setCategories);
