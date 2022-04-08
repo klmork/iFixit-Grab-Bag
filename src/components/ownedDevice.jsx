@@ -7,7 +7,7 @@ class OwnedDevice extends React.Component {
     getImage()
     {
         const { device } = this.props;
-        if (device.image !== null && device.image.thumbnail !== null)
+        if (typeof device !== 'undefined' && device.image !== null && typeof device.image !== 'undefined' && device.image.thumbnail !== null)
         {
             return (<img 
                         className="owned-image" 

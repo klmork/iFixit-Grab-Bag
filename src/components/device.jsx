@@ -8,7 +8,7 @@ class Device extends React.Component {
    {
        const { device } = this.props;
 
-        if (device.image !== null && device.image.standard !== null)
+        if (typeof device !== 'undefined' && device.image !== null && typeof device.image !== 'undefined' && device.image.standard !== null)
         {
             return (<DeviceImg
                         device={device}
@@ -22,7 +22,9 @@ class Device extends React.Component {
         return (
                 <div className="device" 
                     draggable="true"
-                    onDragStart={(e)=> onDrag(e, JSON.stringify(device))}>
+                    onDragStart={(e)=> onDrag(e, JSON.stringify(device))}
+                    onTouchStart={(e) => this.props.onTouchStart(e, device)}
+                >
                     
                     
                     {this.getImage()}

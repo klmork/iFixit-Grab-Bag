@@ -28,6 +28,7 @@ class GrabGab extends React.Component {
                 <div className="grab-bag"   
                  onDragOver={allowDrop}
                  onDrop={onDrop}
+                 onTouchEnd={this.props.onTouchEnd}
                 >
                     <p className="title text-center center">My Owned Devices</p>
                     <div className="grab-bag-drop-box">
