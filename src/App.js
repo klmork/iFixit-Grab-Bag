@@ -1,158 +1,150 @@
 import React from 'react';
+
 import './App.css';
+import './css/Device.css';
+
 import Devices from './components/devices';
 import GrabBag from './components/grabBag';
 import NavBar from './components/navBar';
-import './css/Device.css';
 
-const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY?";
-const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
+const MAX_DISPLAYED = 12;
+const API_URL = "https://www.ifixit.com/api/2.0/";
+const DEVICE_URL = API_URL+"wikis/CATEGORY";
+const CONTENT_HIERARCHY_URL = API_URL+"categories/";
 
 class App extends React.Component {
   state = {
     devices: [],
     page: 0,
-    numDevicesDisplayed: 12,
+    numDevicesDisplayed: MAX_DISPLAYED,
     grabBag: [],
     deviceCategories: []
   };
 
   componentDidMount() {
-    this.handleFetch();
-    this.handleFetchCategories();
+    const url = this.getPageOffsetURL();
+
+    // fetch list of devices for grid
+    this.handleFetch(url, this.setDevices);
+
+    // fetch categories for navbar
+    this.handleFetch(DEVICE_URL + "?display=hierarchy", this.setCategories);
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
-    // -------------------- Helper Functions ---------------------
-    allowDrop = ev => {
-      ev.preventDefault();
-    };
+  ////////////////////////////////////////////////////////////////////
+  //                 Helper Functions                               //
+  ////////////////////////////////////////////////////////////////////
     
-        // Create object for categories of devices you can seach through
+  allowDrop = ev => {
+    ev.preventDefault();
+  };
+    
+   // Create object for categories of devices you can seach through
     // and the associated api call for each one
-    createCategoryObjects = (deviceCategories) =>
-    {
-      const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
-      deviceCategories.forEach(cat => {
-        catObjects.push(
-          { 
-            deviceCategory: cat,
-            url: CONTENT_HIERARCHY_URL+cat
-          })
-
-      });
-      return catObjects;
-    };
-
-    // createCategoryObjectsFromChildren = children =>
-    // {
-    //   const catObjects = [{deviceCategory: "All", url: API_URL + "display=hierarchy"}];
-    //   children.forEach(child => {
-    //     catObjects.push(
-    //       { 
-    //         deviceCategory: cat,
-    //         url: CONTENT_HIERARCHY_URL+cat
-    //       })
-
-    //   });
-    //   return catObjects;
-    // };
-    getPageOffsetURL() {
-      const { page, numDevicesDisplayed } = this.state;
-      const offset = "offset=" + page * numDevicesDisplayed;
-      const limit = "&limit=" + numDevicesDisplayed;
-      return API_URL+offset+limit;
-    }
-
-  // ----------- Event Handlers --------------------------------------
-
-  // Fetch data from API (only for devices currently being displayed)
-  handleFetch = () => {
-    const { page, numDevicesDisplayed } = this.state;
-    const offset = "offset=" + page * numDevicesDisplayed;
-    const limit = "&limit=" + numDevicesDisplayed;
-    fetch(API_URL+offset+limit)
-    .then((res) => res.json())
-    .then((json) => {
-        this.setState({
-          devices: json
-        });
-    })
-  };
-
-  /*TODO: combine with above */
-  handleFetchItem = item => {
-    fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/"+item)
-        .then((res) => res.json())
-        .then((json) => {
-            this.setState({
-              devices: [json] // device needs to be wrapped in list since single device
-            });
+  createCategoryObjects = (deviceCategories) =>
+  {
+    const catObjects = [{deviceCategory: "All", url: DEVICE_URL + "?display=hierarchy"}];
+    deviceCategories.forEach(cat => {
+      catObjects.push(
+        { 
+          deviceCategory: cat,
+          url: CONTENT_HIERARCHY_URL+cat
         })
+
+    });
+    return catObjects;
   };
-      // fetch("https://www.ifixit.com/api/2.0/wikis/CATEGORY/iPhone%204")//API_URL+offset+limit)
-    //     .then((res) => res.json())
-    //     .then((json) => {
-    //         this.setState({
-    //           devices: [json ]
-    //         });
-    //     })
 
-  /* TODO: combine with above */
-  handleFetchCategory = (url) => {
+  // url for requesting devices within appropriate range based on page number
+  getPageOffsetURL() {
+    const { page, numDevicesDisplayed } = this.state;
+    const offset = "?offset=" + page * numDevicesDisplayed;
+    const limit = "&limit=" + numDevicesDisplayed;
+    return DEVICE_URL+offset+limit;
+  }
 
-    fetch(url)
-    .then((res) => res.json())
-    .then((json) => {
+  // ----------------------- Fetching from API -----------------------
+  
+  // Set list of devices to a single device.
+  setDevicesOneItem = json => {
+    this.setState({
+      devices: [json] // device needs to be wrapped in list since single device
+    });
+  };
+
+  // Set list of devices to display based on page numbers.
+  setDevices = json => {
+    this.setState({
+      devices: json
+    });
+  };
+
+  // Set original categories for navbar drop-down
+  setCategories = json => {
+    this.setState({
+      deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
+    });
+  };
+
+  // Update navbar drop-down category after clicking on a parent category.
+  // If a node is selected, set device list to that node.
+  setCategory = json => {
       // if no children, render device
       if (json.children.length === 0) {
-        this.handleFetchItem(json.wiki_title);
+        this.handleFetch(DEVICE_URL+"/"+json.wiki_title, this.setDevicesOneItem);
       } else {
         this.setState({
           deviceCategories: this.createCategoryObjects(json.children)
         });
-      }    
-    })
+      }   
+  }
+  ////////////////////////////////////////////////////////////////////
+  //                   Event Handlers                               //
+  ////////////////////////////////////////////////////////////////////
+  
+  // ----------------------- Fetching from API -----------------------
+
+  // Fetch data from API (only for devices currently being displayed)
+  handleFetch = (apiUrl, setMyData) => {
+    fetch(apiUrl)
+    .then((res) => res.json())
+    .then((json) => setMyData(json));
   };
 
-    // Fetch list of categories for nav bar options (narrow search)
-    handleFetchCategories = () => {
-      const url = API_URL + "display=hierarchy";
-      fetch(url)
-      .then((res) => res.json())
-      .then((json) => {
-          this.setState({
-            deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
-          });
-      })
-     };
 
+  // ----------------------- Searching by Category -----------------------
+  
+  // Nav bar handlers -> handle if selected category or 'All'
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
-        this.handleFetchCategories();
-        this.handleFetch();
+        this.handleFetch(DEVICE_URL + "?display=hierarchy", this.setCategories);
+        this.handleFetch(this.getPageOffsetURL(), this.setDevices);
       }
       else {
       
-        this.handleFetchCategory(cat.url);
+        this.handleFetch(cat.url, this.setCategory);
       }
-
-      // console.log(url);
   };
+
+  // ----------------------- Page Navigation for Device List -----------------------
+
   // Pagination - page left and load devices
   handlePageDecrement = () => {
       if (this.state.page === 0) return;
 
       const page = this.state.page - 1;
-      this.setState({ page }, this.handleFetch);
+      this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL(), this.setDevices));
   };
 
   // Pagination - page right and load devices
   handlePageIncrement = () => {
     const page = this.state.page + 1;
-    this.setState({ page }, this.handleFetch);
+    this.setState({ page }, ()=>this.handleFetch(this.getPageOffsetURL(), this.setDevices));
 
   };
+
+  // ----------------------- Grab Bag -----------------------
 
   // Deleting items from grab bag
   handleDelete = (deviceId) => {
@@ -197,6 +189,7 @@ class App extends React.Component {
   };
 
   // ----- Dragging and Dropping Devices --------------
+
   handleDragStart = (e, v) => {
     e.dataTransfer.dropEffect = "move";
     e.dataTransfer.setData("device", v)
@@ -224,7 +217,10 @@ class App extends React.Component {
     this.setState({ grabBag });
   };
 
-  // -------------------- Render ----------------------------
+  ////////////////////////////////////////////////////////////////////
+  //                        Render                                  //
+  ////////////////////////////////////////////////////////////////////
+
   //TODO: make class for containers with columns and title
   render() { 
     const { page, devices } = this.state;

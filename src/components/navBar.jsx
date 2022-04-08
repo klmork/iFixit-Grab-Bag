@@ -2,31 +2,31 @@ import React from 'react';
 import '../css/NavBar.css';
 
 class NavBar extends React.Component {
-    render() { 
+    // -------- Helper Methods ----------------------------- 
+    renderCategories() {
         const { categories, onCategorySelection } = this.props;
-        console.log(categories);
+        return  (categories.map(category => (
+                    <button
+                        onClick={()=>onCategorySelection(category)}
+                        key={category.deviceCategory}
+                    >
+                        {category.deviceCategory}
+                    </button>
+                )));
+    }
+
+    // ---------- Render --------------------------------------
+    render() { 
         return (
             <div className="navbar">
-                {/* <p className="nav-text nav-title">GrabBag App</p> */}
                 <div className="dropdown">
                     <button className="nav-text dropdown-button">
                         Search by Category
                     </button>
                     <div className="dropdown-content">
-                { 
-                         
-                    categories.map(category => (
-                                    <button
-                                        onClick={()=>onCategorySelection(category)}
-                                        key={category.deviceCategory}
-                                    >
-                                        {category.deviceCategory}
-                                    </button>
-                                ))
-                }
+                    { this.renderCategories() }
+                    </div>
                 </div>
-                </div>
-
             </div>
         );
     }
