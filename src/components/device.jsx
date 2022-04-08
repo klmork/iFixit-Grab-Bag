@@ -23,7 +23,7 @@ class Device extends React.Component {
                 <div className="device" 
                     draggable="true"
                     onDragStart={(e)=> onDrag(e, JSON.stringify(device))}
-                    onTouchStart={(e) => this.props.onTouchStart(e)}
+                    onTouchStart={(e) => this.props.onTouchStart(e, device)}
                 >
                     
                     

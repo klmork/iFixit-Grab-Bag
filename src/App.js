@@ -41,8 +41,8 @@ class App extends React.Component {
     ev.preventDefault();
   };
 
-  pickup = ev => {
-    this.setState({moving: ev.target})
+  pickup = (ev, d) => {
+    this.setState({moving: d})
   };
 
   drop = ev => {
