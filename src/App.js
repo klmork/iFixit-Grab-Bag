@@ -8,8 +8,9 @@ import GrabBag from './components/grabBag';
 import NavBar from './components/navBar';
 
 const MAX_DISPLAYED = 12;
-const API_URL = "https://www.ifixit.com/api/2.0/wikis/CATEGORY";
-const CONTENT_HIERARCHY_URL = "https://www.ifixit.com/api/2.0/categories/";
+const API_URL = "https://www.ifixit.com/api/2.0/";
+const DEVICE_URL = API_URL+"wikis/CATEGORY";
+const CONTENT_HIERARCHY_URL = API_URL+"categories/";
 
 class App extends React.Component {
   state = {
@@ -22,8 +23,12 @@ class App extends React.Component {
 
   componentDidMount() {
     const url = this.getPageOffsetURL();
+
+    // fetch list of devices for grid
     this.handleFetch(url, this.setDevices);
-    this.handleFetchCategories();
+
+    // fetch categories for navbar
+    this.handleFetch(DEVICE_URL + "?display=hierarchy", this.setCategories);
     this.setState({ "grabBag": JSON.parse(localStorage.getItem("grabBag"))});
   }
 
@@ -39,7 +44,7 @@ class App extends React.Component {
     // and the associated api call for each one
   createCategoryObjects = (deviceCategories) =>
   {
-    const catObjects = [{deviceCategory: "All", url: API_URL + "?display=hierarchy"}];
+    const catObjects = [{deviceCategory: "All", url: DEVICE_URL + "?display=hierarchy"}];
     deviceCategories.forEach(cat => {
       catObjects.push(
         { 
@@ -56,7 +61,7 @@ class App extends React.Component {
     const { page, numDevicesDisplayed } = this.state;
     const offset = "?offset=" + page * numDevicesDisplayed;
     const limit = "&limit=" + numDevicesDisplayed;
-    return API_URL+offset+limit;
+    return DEVICE_URL+offset+limit;
   }
 
   // ----------------------- Fetching from API -----------------------
@@ -75,12 +80,19 @@ class App extends React.Component {
     });
   };
 
+  // Set original categories for navbar drop-down
+  setCategories = json => {
+    this.setState({
+      deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
+    });
+  };
+
   // Update navbar drop-down category after clicking on a parent category.
   // If a node is selected, set device list to that node.
   setCategory = json => {
       // if no children, render device
       if (json.children.length === 0) {
-        this.handleFetch(API_URL+"/"+json.wiki_title, this.setDevicesOneItem);
+        this.handleFetch(DEVICE_URL+"/"+json.wiki_title, this.setDevicesOneItem);
       } else {
         this.setState({
           deviceCategories: this.createCategoryObjects(json.children)
@@ -100,23 +112,12 @@ class App extends React.Component {
     .then((json) => setMyData(json));
   };
 
-  // Fetch list of categories for nav bar options (narrow search)
-  handleFetchCategories = () => {
-    const url = API_URL + "?display=hierarchy";
-    fetch(url)
-    .then((res) => res.json())
-    .then((json) => {
-        this.setState({
-          deviceCategories: this.createCategoryObjects(Object.keys(json.hierarchy))
-        });
-    })
-  };
 
   // ----------------------- Searching by Category -----------------------
   
   handleCategorySelection = cat => {
       if (cat.deviceCategory === "All") {
-        this.handleFetchCategories();
+        this.handleFetch(DEVICE_URL + "?display=hierarchy", this.setCategories);
         this.handleFetch(this.getPageOffsetURL(), this.setDevices);
       }
       else {
