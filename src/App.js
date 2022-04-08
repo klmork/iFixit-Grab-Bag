@@ -80,7 +80,7 @@ class App extends React.Component {
   setCategory = json => {
       // if no children, render device
       if (json.children.length === 0) {
-        this.handleFetchItem(json.wiki_title);
+        this.handleFetch(API_URL+"/"+json.wiki_title, this.setDevicesOneItem);
       } else {
         this.setState({
           deviceCategories: this.createCategoryObjects(json.children)
@@ -98,13 +98,6 @@ class App extends React.Component {
     fetch(apiUrl)
     .then((res) => res.json())
     .then((json) => setMyData(json));
-  };
-
-  /*TODO: combine with above */
-  handleFetchItem = item => {
-    fetch(API_URL+"/"+item)
-        .then((res) => res.json())
-        .then((json) => this.setDevicesOneItem(json));
   };
 
   /* TODO: combine with above */
