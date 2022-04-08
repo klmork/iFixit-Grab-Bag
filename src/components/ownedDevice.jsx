@@ -4,13 +4,27 @@ import OwnedDeviceModifier from './ownedDeviceModifier';
 import Trash from '../assets/trash.png';
 
 class OwnedDevice extends React.Component {
+    getImage()
+    {
+        const { device } = this.props;
+        if (device.image !== null && device.image.thumbnail !== null)
+        {
+            return (<img 
+                        className="owned-image" 
+                        src={device.image.thumbnail} 
+                        alt="device"/>
+            );
+        }
+        return <p>No Image Available</p>
+    }
+
     render() { 
         const { device, count } = this.props;
         
         /* TODO: add option to delete on phone / tablets */
         return (
             <div className="owned-device">
-                <img className="owned-image" src={device.image.thumbnail} alt="device"></img>
+                {this.getImage()}
                 <div className="owned-device-title">{device.title}</div>
                 <OwnedDeviceModifier
                     device={device}
