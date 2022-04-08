@@ -26,7 +26,6 @@ class Devices extends React.Component {
                     pageNum={pageNum}
                     onIncrement={onIncrement}
                     onDecrement={onDecrement}
-                    onTouchStart={this.props.onTouchStart}
                 />
             </div>
         );

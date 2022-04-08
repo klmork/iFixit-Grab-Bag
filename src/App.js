@@ -233,11 +233,6 @@ class App extends React.Component {
     this.setState({ grabBag });
   };
 
-  handleTouchStart = () => {
-    console.log("hello");
-    
-  };
-
   ////////////////////////////////////////////////////////////////////
   //                        Render                                  //
   ////////////////////////////////////////////////////////////////////
@@ -272,7 +267,7 @@ class App extends React.Component {
                 onIncrement={this.handlePageIncrement}
                 onDecrement={this.handlePageDecrement}
                 onDrag={this.handleDragStart}
-                onTouchStart={this.handleTouchStart}
+                onTouchStart={this.pickup}
               />
             </div>
           </main>
