@@ -1,6 +1,7 @@
 # Grab Bag Project
 
 Device catalogging tool using iFixit API, HTML5, React, and CSS.
+Deployed to: https://grab-bag-project.herokuapp.com/
 
 ## Table of contents
 
