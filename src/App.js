@@ -18,7 +18,8 @@ class App extends React.Component {
     page: 0,
     numDevicesDisplayed: MAX_DISPLAYED,
     grabBag: [],
-    deviceCategories: []
+    deviceCategories: [],
+    moving: null
   };
 
   componentDidMount() {
@@ -38,6 +39,17 @@ class App extends React.Component {
     
   allowDrop = ev => {
     ev.preventDefault();
+  };
+
+  pickup = ev => {
+    this.setState({moving: ev.target})
+  };
+
+  drop = ev => {
+    if (this.state.moving !== null)
+    {
+        this.setState({moving: null});
+    }
   };
     
    // Create object for categories of devices you can seach through
@@ -192,7 +204,7 @@ class App extends React.Component {
 
   handleDragStart = (e, v) => {
     e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("device", v)
+    e.dataTransfer.setData("device", v);
   };
 
   handleDrop = e => {
@@ -246,6 +258,7 @@ class App extends React.Component {
               <GrabBag 
                 allowDrop={this.allowDrop}
                 onDrop={this.handleDrop}
+                onTouchEnd={this.drop}
                 grabBag={this.state.grabBag}
                 onDelete={this.handleDelete}
                 onIncrement={this.handleDeviceCountIncrement}
@@ -259,7 +272,7 @@ class App extends React.Component {
                 onIncrement={this.handlePageIncrement}
                 onDecrement={this.handlePageDecrement}
                 onDrag={this.handleDragStart}
-                onTouchStart={this.handleDragStart}
+                onTouchStart={this.handleTouchStart}
               />
             </div>
           </main>
